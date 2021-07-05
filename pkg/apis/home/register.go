@@ -2,8 +2,7 @@ package home
 
 import (
 	"github.com/labstack/echo/v4"
-	"gopkg.in/yaml.v3"
-	"io/ioutil"
+	"log"
 	"net/http"
 )
 
@@ -15,19 +14,12 @@ func Register(g *echo.Group) {
 }
 
 func (res *resource) home(ctx echo.Context) error {
-	content, err := ioutil.ReadFile("resume.yaml")
+	service, err := NewService("resume.yaml")
 	if err != nil {
 		return err
 	}
 
-	resume := Resume{}
-	err = yaml.Unmarshal(content, &resume)
-	if err != nil {
-		return err
-	}
-	err = ValidateResume(resume)
-	if err != nil {
-		return err
-	}
+	log.Printf("%+v", service.resume)
+
 	return ctx.HTML(http.StatusOK, "pass")
 }

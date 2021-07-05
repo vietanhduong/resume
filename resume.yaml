@@ -9,22 +9,22 @@ spec:
   - section:
     name: Education
     achievements:
-#      - name: "achievement 1"
-##        duration:
-###          start: "2019"
-##          end: "present"
-#        details:
-#          - "details 1"
-#          - "details 2"
-#          - "details 3"
-#      - name: "achievement 2"
-#        duration:
-#          start: "Jul 2018"
-#          end: "2019"
-#        details:
-#          - "details 1"
-#          - "details 2"
-#          - "details 3"
+      - name: "achievement 1"
+        duration:
+          start: "2019"
+          end: "present"
+        details:
+          - "details 1"
+          - "details 2"
+          - "details 3"
+      - name: "achievement 2"
+        duration:
+          start: "Jul 2018"
+          end: "2019"
+        details:
+          - "details 1"
+          - "details 2"
+          - "details 3"
   - section:
     name: "Honor and Awards"
     achievements:

@@ -3,11 +3,13 @@ package home
 import (
 	"errors"
 	"fmt"
+	"github.com/vietanhduong/resume/pkg/cerrors"
+	"net/http"
 )
 
 // ValidateResume validate input resume
-func ValidateResume(resume Resume) error {
-	var err error
+func ValidateResume(resume *Resume) *cerrors.CError {
+	var err *cerrors.CError
 	// validate name field
 	if err = ValidateRequiredField("name", resume.Name); err != nil {
 		return err
@@ -24,8 +26,8 @@ func ValidateResume(resume Resume) error {
 }
 
 // ValidateMetadataBlock validate input metadata block
-func ValidateMetadataBlock(meta Metadata) error {
-	var err error
+func ValidateMetadataBlock(meta Metadata) *cerrors.CError {
+	var err *cerrors.CError
 	// validate address
 	if err = ValidateRequiredField("metadata.address", meta.Address); err != nil {
 		return err
@@ -43,10 +45,13 @@ func ValidateMetadataBlock(meta Metadata) error {
 }
 
 // ValidateSpecBlock validate input spec block
-func ValidateSpecBlock(spec []Section) error {
+func ValidateSpecBlock(spec []Section) *cerrors.CError {
 	// validate spec block
 	if spec == nil {
-		return errors.New("spec is required")
+		return &cerrors.CError{
+			Code: http.StatusBadRequest,
+			Err:  errors.New("spec is required"),
+		}
 	}
 	// validate section blocks
 	for i, section := range spec {
@@ -61,8 +66,8 @@ func ValidateSpecBlock(spec []Section) error {
 // with:
 // 		father: indicates the parent block of block section, e.g: spec.section[1]
 // 		achievement: input section block
-func ValidateSectionBlock(father string, section Section) error {
-	var err error
+func ValidateSectionBlock(father string, section Section) *cerrors.CError {
+	var err *cerrors.CError
 	// validate section name
 	if err = ValidateRequiredField(fmt.Sprintf("%s.name", father), section.Name); err != nil {
 		return err
@@ -70,7 +75,10 @@ func ValidateSectionBlock(father string, section Section) error {
 	// validate achievement blocks
 	// achievement list cannot be empty
 	if section.Achievements == nil {
-		return errors.New(fmt.Sprintf("%s.achievements cannot be empty", father))
+		return &cerrors.CError{
+			Code: http.StatusBadRequest,
+			Err:  errors.New(fmt.Sprintf("%s.achievements cannot be empty", father)),
+		}
 	}
 	// validate each block
 	for i, achievement := range section.Achievements {
@@ -85,8 +93,8 @@ func ValidateSectionBlock(father string, section Section) error {
 // with:
 // 		father: indicates the parent block of block achievement, e.g: spec.section[1].achievements[0]
 // 		achievement: input achievement block
-func ValidateAchievementBlock(father string, achievement Achievement) error {
-	var err error
+func ValidateAchievementBlock(father string, achievement Achievement) *cerrors.CError {
+	var err *cerrors.CError
 	// validate section name
 	if err = ValidateRequiredField(fmt.Sprintf("%s.name", father), achievement.Name); err != nil {
 		return err
@@ -103,7 +111,7 @@ func ValidateAchievementBlock(father string, achievement Achievement) error {
 // with:
 // 		father: indicates the parent block of block duration, e.g: spec.section[1].achievements[0].duration
 // 		duration: input duration block
-func ValidateDurationBlock(father string, duration Duration) error {
+func ValidateDurationBlock(father string, duration Duration) *cerrors.CError {
 	// validate start field, this field is required
 	if err := ValidateRequiredField(fmt.Sprintf("%s.start", father), duration.Start); err != nil {
 		return err
@@ -115,9 +123,12 @@ func ValidateDurationBlock(father string, duration Duration) error {
 // ValidateRequiredField validate input field, return error if input
 // value is nil or empty.
 // error format: <fieldName> is required
-func ValidateRequiredField(fieldName, value string) error {
+func ValidateRequiredField(fieldName, value string) *cerrors.CError {
 	if value == "" {
-		return errors.New(fmt.Sprintf("%s is required", fieldName))
+		return &cerrors.CError{
+			Code: http.StatusBadRequest,
+			Err:  errors.New(fmt.Sprintf("%s is required", fieldName)),
+		}
 	}
 	return nil
 }
