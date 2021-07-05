@@ -1,30 +1,50 @@
 package home
 
+// Duration block
 type Duration struct {
+	// required
 	Start string `yaml:"start,omitempty"`
-	End   string `yaml:"end,omitempty"`
+	// +optional
+	End string `yaml:"end,omitempty"`
 }
 
+// Achievement block
 type Achievement struct {
-	Name     string    `yaml:"name"`
+	// required
+	Name string `yaml:"name"`
+	// required
 	Duration Duration `yaml:"duration"`
-	Details  []string  `yaml:"details,flow,omitempty"`
+	// the achievement details
+	// +optional
+	Details []string `yaml:"details,flow,omitempty"`
 }
 
+// Section block
 type Section struct {
-	Name         string         `yaml:"name"`
+	// required
+	Name string `yaml:"name"`
+	// required: at least 1 achievement
 	Achievements []Achievement `yaml:"achievements,flow"`
 }
 
+// Metadata block
 type Metadata struct {
-	Address  string   `yaml:"address"`
-	Phone    string   `yaml:"phone"`
-	Email    string   `yaml:"email"`
+	// required
+	Address string `yaml:"address"`
+	// required
+	Phone string `yaml:"phone"`
+	// required
+	Email string `yaml:"email"`
+	// +optional
 	Websites []string `yaml:"websites,flow,omitempty"`
 }
 
+// Resume represent resume
 type Resume struct {
-	Name     string     `yaml:"name"`
-	Metadata Metadata  `yaml:"metadata"`
-	Spec     []Section `yaml:"spec"`
+	// required
+	Name string `yaml:"name"`
+	// required
+	Metadata Metadata `yaml:"metadata"`
+	// required: at least 1 section
+	Spec []Section `yaml:"spec"`
 }
