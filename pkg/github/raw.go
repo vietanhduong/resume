@@ -8,13 +8,11 @@ import (
 	"net/http"
 )
 
-// raw is a class for get GitHub raw
 type raw struct {
 	user string
 	repo string
 }
 
-// NewRaw creates a new raw to get GitHub raw public repo
 func NewRaw(user, repo string) *raw {
 	return &raw{
 		user: user,
