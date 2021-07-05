@@ -30,28 +30,19 @@ func NewService(path string) (*service, *cerrors.CError) {
 func parse(path string) (*Resume, *cerrors.CError) {
 	// validate input path is exist
 	if !file.IsExist(path) {
-		return nil, &cerrors.CError{
-			Code: http.StatusNotFound,
-			Err:  errors.New(fmt.Sprintf("%s does not exist!", path)),
-		}
+		return nil, cerrors.NewCError(http.StatusNotFound, errors.New(fmt.Sprintf("%s does not exist!", path)))
 	}
 
 	content, err := ioutil.ReadFile(path)
 	if err != nil {
-		return nil, &cerrors.CError{
-			Code: http.StatusServiceUnavailable,
-			Err:  err,
-		}
+		return nil, cerrors.NewCError(http.StatusInternalServerError, err)
 	}
 
 	// parse yaml
 	var resume *Resume
 	err = yaml.Unmarshal(content, &resume)
 	if err != nil {
-		return nil, &cerrors.CError{
-			Code: http.StatusServiceUnavailable,
-			Err:  err,
-		}
+		return nil, cerrors.NewCError(http.StatusInternalServerError, err)
 	}
 
 	return resume, nil

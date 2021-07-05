@@ -48,10 +48,7 @@ func ValidateMetadataBlock(meta Metadata) *cerrors.CError {
 func ValidateSpecBlock(spec []Section) *cerrors.CError {
 	// validate spec block
 	if spec == nil {
-		return &cerrors.CError{
-			Code: http.StatusBadRequest,
-			Err:  errors.New("spec is required"),
-		}
+		return cerrors.NewCError(http.StatusBadRequest, errors.New("spec is required"))
 	}
 	// validate section blocks
 	for i, section := range spec {
@@ -75,10 +72,7 @@ func ValidateSectionBlock(father string, section Section) *cerrors.CError {
 	// validate achievement blocks
 	// achievement list cannot be empty
 	if section.Achievements == nil {
-		return &cerrors.CError{
-			Code: http.StatusBadRequest,
-			Err:  errors.New(fmt.Sprintf("%s.achievements cannot be empty", father)),
-		}
+		return cerrors.NewCError(http.StatusBadRequest, errors.New(fmt.Sprintf("%s.achievements cannot be empty", father)))
 	}
 	// validate each block
 	for i, achievement := range section.Achievements {
@@ -125,10 +119,7 @@ func ValidateDurationBlock(father string, duration Duration) *cerrors.CError {
 // error format: <fieldName> is required
 func ValidateRequiredField(fieldName, value string) *cerrors.CError {
 	if value == "" {
-		return &cerrors.CError{
-			Code: http.StatusBadRequest,
-			Err:  errors.New(fmt.Sprintf("%s is required", fieldName)),
-		}
+		return cerrors.NewCError(http.StatusBadRequest, errors.New(fmt.Sprintf("%s is required", fieldName)))
 	}
 	return nil
 }
