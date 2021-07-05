@@ -6,22 +6,25 @@ import (
 	"io/ioutil"
 	"log"
 	"net/http"
+	"os"
 )
 
 type raw struct {
-	user string
-	repo string
+	user   string
+	repo   string
+	branch string
 }
 
-func NewRaw(user, repo string) *raw {
+func NewRaw(user, repo, branch string) *raw {
 	return &raw{
-		user: user,
-		repo: repo,
+		user:   user,
+		repo:   repo,
+		branch: branch,
 	}
 }
 
 func (r *raw) baseURL() string {
-	return fmt.Sprintf("https://raw.githubusercontent.com/%s/%s", r.user, r.repo)
+	return fmt.Sprintf("https://raw.githubusercontent.com/%s/%s/%s", r.user, r.repo, r.branch)
 }
 
 func (r *raw) GetRaw(path string) ([]byte, *cerrors.CError) {
@@ -43,4 +46,12 @@ func (r *raw) GetRaw(path string) ([]byte, *cerrors.CError) {
 	}
 
 	return content, nil
+}
+
+func (r *raw) SaveRaw(content []byte, output string) *cerrors.CError {
+	err := ioutil.WriteFile(output, content, os.FileMode(0644))
+	if err != nil {
+		return cerrors.NewCError(http.StatusInternalServerError, err)
+	}
+	return nil
 }
