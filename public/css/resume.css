@@ -1,0 +1,77 @@
+@import url('https://fonts.googleapis.com/css?family=Helvetica&display=swap');
+
+body {
+    font-family: 'Helvetica', sans-serif;
+    font-size: 14pt;
+}
+
+.content {
+    max-width: 45em;
+    margin: 50pt auto;
+    text-align: justify;
+}
+
+.pb12 {
+    padding-bottom: 12pt;
+}
+
+table.header {
+    border-spacing: 0;
+    border-collapse: collapse;
+    margin-right: auto;
+    width: 100%;
+}
+
+.metadata {
+    width: 22em;
+    line-height: 1.3;
+}
+
+.name {
+    font-weight: 600;
+    font-size: 28pt;
+}
+
+p {
+    margin: 5px 0
+}
+
+p.section_name {
+    font-size: 18pt;
+    font-weight: 600;
+    border-bottom-color: #000000;
+    border-bottom-width: 1pt;
+    border-bottom-style: solid;
+    margin-bottom: 5pt;
+}
+
+table.achievement {
+    border-collapse: separate;
+    border-spacing: 0 0.5em;
+}
+
+td.duration {
+    width: 10em;
+    text-align: justify;
+    vertical-align: top;
+}
+
+td.detail {
+    padding-left: 1em;
+    text-align: justify;
+    vertical-align: top;
+}
+
+ul {
+    margin: 0 0;
+    padding-left: 25px;
+}
+
+li {
+    margin: 7px 0;
+}
+
+span.detail_title {
+    font-weight: 600;
+    margin-bottom: 10px;
+}

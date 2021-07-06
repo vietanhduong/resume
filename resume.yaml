@@ -1,33 +1,38 @@
 name: "Viet Anh Duong"
 metadata:
-  address: "Hanoi"
+  address: "6/140, Le Mat Street, Long Bien District, Hanoi"
   phone: "(+84) 345 500 597"
   email: "vietanhs0817@gmail.com"
   websites:
     - "https://anhdv.dev"
+    - "https://github.com/vietanhduong"
 spec:
   - section:
     name: Education
     achievements:
-      - name: "achievement 1"
+      - name: FPT University, Viet Nam – Engineer’s Degree in Software Engineering
         duration:
-          start: "2019"
-          end: "present"
-        details:
-          - "details 1"
-          - "details 2"
-          - "details 3"
-      - name: "achievement 2"
+          start: Oct 2014
+          end: Sep 2018
+      - name: Ly Thuong Kiet High School, Viet Nam
         duration:
-          start: "Jul 2018"
-          end: "2019"
-        details:
-          - "details 1"
-          - "details 2"
-          - "details 3"
+          start: 2011
+          end: Jul 2014
   - section:
-    name: "Honor and Awards"
+    name: Honor and Awards
     achievements:
-      - name: "achievement 1"
+      - name: 2nd Prize in the olympiad in informatics of Hanoi province
         duration:
-          start: "2019"
+          start: "Nov 2012"
+  - section:
+    name: Working Experience
+    achievements:
+      - name: PhongVu's Payment Gateway
+        duration:
+          start: Apr 2019
+          end: Feb 2020
+        details:
+          - "Teko, Vietnam"
+          - "Integrate partner's payment methods to the payment gateway, handle concurrent transactions. It makes it easier for users to pay."
+          - "The technologies used: Go-gRPC, K8S, Docker, ..."
+          - "Software/DevOps engineer"

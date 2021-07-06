@@ -2,7 +2,6 @@ package home
 
 import (
 	"github.com/labstack/echo/v4"
-	"github.com/vietanhduong/resume/pkg/github"
 	"net/http"
 )
 
@@ -14,18 +13,10 @@ func Register(g *echo.Group) {
 }
 
 func (res *resource) home(ctx echo.Context) error {
-	//service, err := NewService("resume.yaml")
-	//if err != nil {
-	//	return err
-	//}
-
-	githubRaw := github.NewRaw("vietanhduong", "resume", "master")
-	resume, err := githubRaw.GetRaw("resume.yaml")
+	svc, err := NewService("resume.yaml")
 	if err != nil {
 		return err
 	}
-	if err = githubRaw.SaveRaw(resume, "resume.override.yaml"); err != nil {
-		return err
-	}
-	return ctx.HTMLBlob(http.StatusOK, resume)
+	data := svc.ConvertResumeToResponse()
+	return ctx.Render(http.StatusOK, "resume.html", data)
 }

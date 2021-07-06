@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>{{index .name}}'s Resume</title>
+    <link rel="stylesheet" href="../css/resume.css">
+</head>
+<body>
+<div class="content">
+    <div class="pb12">
+        <table class="header">
+            <tr>
+                <td class="name">
+                    {{index .name}}
+                </td>
+                <td class="metadata">
+                    {{index .metadata.address}} <br/>
+                    {{index .metadata.phone}}<br/>
+                    <a href='mailto:{{index .metadata.email}}'>{{index .metadata.email}}</a><br/>
+                    {{range .metadata.websites}}
+                    <a href='{{.}}' target="_blank">{{.}}</a><br/>
+                    {{end}}
+                </td>
+            </tr>
+        </table>
+    </div>
+    <div class="spec">
+        {{range .sections}}
+        <div class="section">
+            <p class="section_name">
+                {{.name}}
+            </p>
+            <table class="achievement">
+                {{range .achievements}}
+                <tr>
+                    <td class="duration">
+                        {{.duration}}
+                    </td>
+                    <td class="detail">
+                        <span class="detail_title">{{.name}}</span>
+                        {{if .details}}
+                        <ul>
+                            {{range .details}}
+                            <li>
+                                {{.}}
+                            </li>
+                            {{end}}
+                        </ul>
+                        {{end}}
+                    </td>
+                </tr>
+                {{end}}
+            </table>
+        </div>
+        {{end}}
+    </div>
+</div>
+</body>
+</html>

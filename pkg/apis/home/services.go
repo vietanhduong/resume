@@ -27,6 +27,21 @@ func NewService(path string) (*service, *cerrors.CError) {
 	return &service{resume: resume}, nil
 }
 
+func (s *service) ConvertResumeToResponse() map[string]interface{} {
+	// convert sections to list(map)
+	var sections []map[string]interface{}
+	for _, section := range s.resume.Spec {
+		sections = append(sections, ConvertSectionToMap(section))
+	}
+	// convert resume
+	resume := map[string]interface{}{
+		"name":     s.resume.Name,
+		"metadata": ConvertMetadataToMap(s.resume.Metadata),
+		"sections": sections,
+	}
+	return resume
+}
+
 func parse(path string) (*Resume, *cerrors.CError) {
 	// validate input path is exist
 	if !file.IsExist(path) {
