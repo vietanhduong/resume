@@ -39,7 +39,7 @@ jobs:
     steps:
       - uses: actions/checkout@v2
       - name: Validate resume
-        run: ./bin/resume --validate resume.yaml && echo "${{ needs.prepare.outputs.have_build }}"
+        run: ./bin/resume --validate resume.yaml
 
       - name: Notify to server
         if: needs.prepare.outputs.have_build == 'false'
