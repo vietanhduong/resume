@@ -36,3 +36,15 @@ spec:
           - "Integrate partner's payment methods to the payment gateway, handle concurrent transactions. It makes it easier for users to pay."
           - "The technologies used: Go-gRPC, K8S, Docker, ..."
           - "Software/DevOps engineer"
+  - section:
+    name: Working Experience
+    achievements:
+      - name: PhongVu's Payment Gateway
+        duration:
+          start: Apr 2019
+          end: Feb 2020
+        details:
+          - "Teko, Vietnam"
+          - "Integrate partner's payment methods to the payment gateway, handle concurrent transactions. It makes it easier for users to pay."
+          - "The technologies used: Go-gRPC, K8S, Docker, ..."
+          - "Software/DevOps engineer"
