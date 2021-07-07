@@ -20,4 +20,4 @@ jobs:
 
     - name: Build
       run: |
-        curl -H "Accept: application/vnd.github.v3+json" -H "Authorization: token $TOKEN" https://api.github.com
+        curl -H "Accept: application/vnd.github.v3+json" -H "Authorization: token $TOKEN" https://api.github.com/user
