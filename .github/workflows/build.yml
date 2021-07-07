@@ -11,7 +11,30 @@ on:
         default: "false"
 
 jobs:
+  prepare:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+
+      - name: Build new Image or not
+        id: have_build
+        run: |
+          BUILD="${{ github.event.inputs.build }}"
+          BUILD="${BUILD:-false}"
+
+          COMMIT_MSG="${{ github.event.head_commit.message }}"
+          COMMIT_MSG="$(echo $COMMIT_MSG | awk '{print tolower($0)}')"
+
+          VERDICT=true
+          if [[ ! "$COMMIT_MSG" =~ ^build.* ]] && [[ "$BUILD" != "true" ]]; then
+            echo "Commit not start with 'build' or input is false"
+            VERDICT=false
+          fi
+
+          echo "##[set-output name=result;]$(echo $VERDICT)"
+
   validate:
+    needs: prepare
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v2
@@ -20,28 +43,18 @@ jobs:
         run: ./bin/resume --validate resume.yaml
 
       - name: Notify to server
+        if: needs.prepare.have_build.result == 'false'
         run: |
           TOKEN="${{ secrets.PAT }}"
           curl -sSLf -H "Authorization: token $TOKEN" https://resume.anhdv.dev/fetch
 
   build:
     needs:
+      - prepare
       - validate
+    if: needs.prepare.have_build.result == 'true'
     runs-on: ubuntu-latest
     steps:
-      - name: Verify event
-        run: |
-          BUILD="${{ github.event.inputs.build }}"
-          BUILD="${BUILD:-false}"
-
-          COMMIT_MSG="${{ github.event.head_commit.message }}"
-          COMMIT_MSG="$(echo $COMMIT_MSG | awk '{print tolower($0)}')"
-
-          if [[ ! "$COMMIT_MSG" =~ ^build.* ]] && [[ "$BUILD" != "true" ]]; then
-            echo "Commit not start with 'build' or input is false"
-            exit 0
-          fi
-
       - uses: actions/checkout@v2
 
       - name: Validate resume
@@ -78,24 +91,12 @@ jobs:
           mv /tmp/.buildx-cache-new /tmp/.buildx-cache
 
   deploy:
-    runs-on: ubuntu-18.04
     needs:
+      - prepare
       - build
-
+    if: needs.prepare.have_build.result == 'true'
+    runs-on: ubuntu-18.04
     steps:
-      - name: Verify event
-        run: |
-          BUILD="${{ github.event.inputs.build }}"
-          BUILD="${BUILD:-false}"
-
-          COMMIT_MSG="${{ github.event.head_commit.message }}"
-          COMMIT_MSG="$(echo $COMMIT_MSG | awk '{print tolower($0)}')"
-
-          if [[ ! "$COMMIT_MSG" =~ ^build.* ]] && [[ "$BUILD" != "true" ]]; then
-            echo "Commit not start with 'build' or input is false"
-            exit 0
-          fi
-
       - name: Install SSH Key
         uses: appleboy/ssh-action@master
         with:
