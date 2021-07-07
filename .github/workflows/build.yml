@@ -1,4 +1,4 @@
-name: "Docker build & deploy"
+name: "Resume CI"
 
 on:
   push:
@@ -11,7 +11,22 @@ on:
         default: "false"
 
 jobs:
+  validate:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+
+      - name: Validate resume
+        run: ./bin/resume --validate resume.yaml
+
+      - name: Notify to server
+        run: |
+          TOKEN="${{ secrets.PAT }}"
+          curl -sSLf -H "Authorization: token $TOKEN" https://resume.anhdv.dev/fetch
+
   build:
+    needs:
+      - validate
     runs-on: ubuntu-latest
     steps:
       - name: Verify event
@@ -28,6 +43,9 @@ jobs:
           fi
 
       - uses: actions/checkout@v2
+
+      - name: Validate resume
+        run: ./bin/resume --validate resume.yaml
 
       - name: Set up Docker Buildx
         uses: docker/setup-buildx-action@master
@@ -58,3 +76,30 @@ jobs:
         run: |
           rm -rf /tmp/.buildx-cache
           mv /tmp/.buildx-cache-new /tmp/.buildx-cache
+
+  deploy:
+    runs-on: ubuntu-18.04
+    needs:
+      - build
+
+    steps:
+      - name: Verify event
+        run: |
+          BUILD="${{ github.event.inputs.build }}"
+          BUILD="${BUILD:-false}"
+
+          COMMIT_MSG="${{ github.event.head_commit.message }}"
+          COMMIT_MSG="$(echo $COMMIT_MSG | awk '{print tolower($0)}')"
+
+          if [[ ! "$COMMIT_MSG" =~ ^build.* ]] && [[ "$BUILD" != "true" ]]; then
+            echo "Commit not start with 'build' or input is false"
+            exit 0
+          fi
+
+      - name: Install SSH Key
+        uses: appleboy/ssh-action@master
+        with:
+          host: ${{ secrets.HOST }}
+          username: ${{ secrets.USERNAME }}
+          key: ${{ secrets.SSH_PRIVATE_KEY }}
+          script: sudo service resume restart
