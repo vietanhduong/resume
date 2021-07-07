@@ -13,9 +13,9 @@ func fetchResume() {
 	user := env.GetEnvAsStringOrFallback("GH_USER", "vietanhduong")
 	repo := env.GetEnvAsStringOrFallback("GH_REPO", "resume")
 	branch := env.GetEnvAsStringOrFallback("GH_BRANCH", "master")
-	gr := github.NewRaw(user, repo, branch)
+	gh := github.Github(user, repo, branch)
 	// get resume from GitHub
-	content, err := gr.GetRaw(env.GetEnvAsStringOrFallback("RESUME_PATH", "resume.yaml"))
+	content, err := gh.GetRaw(env.GetEnvAsStringOrFallback("RESUME_PATH", "resume.yaml"))
 	if err != nil {
 		output.Eprintf("%v\n", err)
 		os.Exit(1)
@@ -23,7 +23,7 @@ func fetchResume() {
 	output.Printf("Fetch Resume from GitHub => Done\n")
 	// save resume
 	outputPath := env.GetEnvAsStringOrFallback("RESUME_OUTPUT_PATH", "resume.yaml")
-	if err := gr.SaveRaw(content, outputPath); err != nil {
+	if err := gh.SaveRaw(content, outputPath); err != nil {
 		output.Eprintf("%v\n", err)
 		os.Exit(1)
 	}
