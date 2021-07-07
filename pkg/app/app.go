@@ -4,7 +4,7 @@ import (
 	"context"
 	"github.com/labstack/echo/v4"
 	"github.com/labstack/echo/v4/middleware"
-	"github.com/vietanhduong/resume/pkg/apis/home"
+	"github.com/vietanhduong/resume/pkg/apis/resume"
 	"github.com/vietanhduong/resume/pkg/cerrors"
 	"github.com/vietanhduong/resume/pkg/templates"
 	"html/template"
@@ -54,6 +54,7 @@ func (a *App) Run(addr string) {
 	}
 	// run the server in a goroutine so that it doesn't block
 	go func() {
+		log.Printf("server is starting at addr: %s", addr)
 		if err := server.ListenAndServe(); err != nil {
 			log.Println(err)
 		}
@@ -83,6 +84,6 @@ func (a *App) initializeRoutes() {
 	g := a.Echo.Group("")
 
 	// home router
-	home.Register(g)
+	resume.Register(g)
 
 }

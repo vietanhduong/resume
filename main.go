@@ -1,11 +1,7 @@
 package main
 
-import "github.com/vietanhduong/resume/pkg/app"
+import "github.com/vietanhduong/resume/cmd"
 
 func main() {
-	application := app.App{}
-	// initialize routers before run server
-	application.Initialize()
-	// run server
-	application.Run(":8080")
+	cmd.Execute()
 }
