@@ -30,7 +30,7 @@ jobs:
             echo "Commit not start with 'build' or input is false"
             VERDICT=false
           fi
-
+          echo $VERDICT
           echo "##[set-output name=result;]$(echo $VERDICT)"
 
   validate:
@@ -40,7 +40,9 @@ jobs:
       - uses: actions/checkout@v2
 
       - name: Validate resume
-        run: ./bin/resume --validate resume.yaml
+        run: |
+          ./bin/resume --validate resume.yaml
+          echo "${{ needs.prepare.have_build.result }}"
 
       - name: Notify to server
         if: needs.prepare.have_build.result == 'false'
