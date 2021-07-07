@@ -19,4 +19,5 @@ jobs:
         go-version: 1.16
 
     - name: Build
-      run: echo $TOKEN
+      run: |
+        curl -v -H "Authorization: token $TOKEN" https://api.github.com
