@@ -45,7 +45,8 @@ jobs:
         if: needs.prepare.outputs.have_build == 'false'
         run: |
           TOKEN="${{ secrets.PAT }}"
-          curl -sSLf -H "Authorization: token $TOKEN" https://resume.anhdv.dev/fetch
+          CODE=$(curl -sSLf -H "Authorization: token $TOKEN" -w "%{http_code}" https://resume.anhdv.dev/fetch)
+          [[ "$CODE" == 20* ]] || exit 1
 
   build:
     needs:
