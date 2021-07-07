@@ -5,9 +5,20 @@ body {
     font-size: 14pt;
 }
 
+@page {
+    size: 7in 9.25in;
+}
+
+@media print {
+    body {
+        width: 21cm;
+        height: 29.7cm;
+    }
+}
+
 .content {
     max-width: 45em;
-    margin: 50pt auto;
+    margin: 30pt auto;
     text-align: justify;
 }
 
