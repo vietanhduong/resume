@@ -13,9 +13,9 @@ on:
 jobs:
   prepare:
     runs-on: ubuntu-latest
+    outputs:
+      have_build: ${{ steps.have_build.outputs.result }}
     steps:
-      - uses: actions/checkout@v2
-
       - name: Build new Image or not
         id: have_build
         run: |
@@ -30,22 +30,19 @@ jobs:
             echo "Commit not start with 'build' or input is false"
             VERDICT=false
           fi
-          echo $VERDICT
-          echo "##[set-output name=result;]$(echo $VERDICT)"
+
+          echo "::set-output name=result::$VERDICT"
 
   validate:
     needs: prepare
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v2
-
       - name: Validate resume
-        run: |
-          ./bin/resume --validate resume.yaml
-          echo "${{ needs.prepare.have_build.result }}"
+        run: ./bin/resume --validate resume.yaml && echo "${{ needs.prepare.outputs.have_build }}"
 
       - name: Notify to server
-        if: needs.prepare.have_build.result == 'false'
+        if: needs.prepare.outputs.have_build == 'false'
         run: |
           TOKEN="${{ secrets.PAT }}"
           curl -sSLf -H "Authorization: token $TOKEN" https://resume.anhdv.dev/fetch
@@ -54,7 +51,7 @@ jobs:
     needs:
       - prepare
       - validate
-    if: needs.prepare.have_build.result == 'true'
+    if: needs.prepare.outputs.have_build == 'true'
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v2
@@ -96,7 +93,7 @@ jobs:
     needs:
       - prepare
       - build
-    if: needs.prepare.have_build.result == 'true'
+    if: needs.prepare.outputs.have_build == 'true'
     runs-on: ubuntu-18.04
     steps:
       - name: Install SSH Key
