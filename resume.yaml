@@ -57,11 +57,11 @@ spec:
       - name: Daito
         duration:
           start: 2017
-          details:
-            - "FPT Software (Intern)"
-            - "Real estate management system in Japan"
-            - "The technologies used: Java Spring, Oracle"
-            - "Software engineer"
+        details:
+          - "FPT Software (Intern)"
+          - "Real estate management system in Japan"
+          - "The technologies used: Java Spring, Oracle"
+          - "Software engineer"
   - section:
     name: Skills & Expertise
     achievements:
@@ -70,13 +70,13 @@ spec:
           start: Languages
       - name: Linux, Macintosh, Windows
         duration:
-          start: Languages
+          start: Platform
       - name: Kubernetes, GitlabCI, ArgoCD, CircleCI,...
         duration:
           start: Technology
       - name: MSSQL, MySQL, Redis
         duration:
-          start: Languages
+          start: Database
   - section:
     name: Activities
     achievements:
