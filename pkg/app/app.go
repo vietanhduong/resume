@@ -39,10 +39,11 @@ func (a *App) Initialize() {
 	a.Echo.HTTPErrorHandler = cerrors.HTTPErrorHandler
 	// customize request log
 	a.Echo.Use(middleware.LoggerWithConfig(middleware.LoggerConfig{
-		Format: "[REQUEST] ${time_rfc3339} | ${status} | ${method} ${uri} \n",
+		Format: "INFO  | ${time_rfc3339} | ${status} | ${method} ${uri} \n",
+		Output: a.Echo.Logger.Output(),
 	}))
 	// custom logger
-	a.Echo.Logger.SetHeader("[${level}] ${time_rfc3339} | ${short_file}:${line} | ${message}")
+	a.Echo.Logger.SetHeader("${level} | ${time_rfc3339} | ${short_file}:${line} | ${message}")
 
 	// register routers
 	a.initializeRoutes()
