@@ -17,7 +17,7 @@ permissions:
   deployments: read
   issues: read
   pull-requests: read
-  repository-projects: read|write
+  repository-projects: write
   security-events: read
 
 jobs:
