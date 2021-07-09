@@ -44,7 +44,7 @@ jobs:
       - name: Notify to server
         if: needs.prepare.outputs.have_build == 'false'
         run: |
-          TOKEN="${{ secrets.GITHUB_TOKEN }}"
+          TOKEN="${{ secrets.PAT }}"
           CODE=$(curl -sSLf -H "Authorization: token $TOKEN" -w "%{http_code}" https://resume.anhdv.dev/fetch)
           [[ "$CODE" == 20* ]] || exit 1
 
