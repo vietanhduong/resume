@@ -10,16 +10,6 @@ on:
         required: false
         default: "false"
 
-permissions: 
-  actions: read
-  checks: read
-  contents: read
-  deployments: read
-  issues: read
-  pull-requests: read
-  repository-projects: write
-  security-events: read
-
 jobs:
   prepare:
     runs-on: ubuntu-latest
