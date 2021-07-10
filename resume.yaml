@@ -32,36 +32,32 @@ spec:
           start: Mar 2021
           end: Present
         details:
-          - "Kyber Network, Vietnam"
+          - "Kyber Network, Vietnam - DevOps Engineer"
           - "Construction and management of Kyber Network's infrastructure."
           - "The technologies using: GKE, EKS, Terraform, Vault, ..."
-          - "DevOps Engineer"
       - name: PhongVu's Payment Gateway
         duration:
           start: Apr 2019
           end: Feb 2020
         details:
-          - "Teko, Vietnam"
+          - "Teko, Vietnam - Software/DevOps Engineer"
           - "Integrate partner's payment methods to the payment gateway, handle concurrent transactions. It makes it easier for users to pay."
           - "The technologies used: Go-gRPC, Kubernetes, Docker, ..."
-          - "Software/DevOps engineer"
       - name: PhongVu's Customer Support Center
         duration:
           start: Sep 2018
           end: Apr 2019
         details:
-          - "Teko, Vietnam"
+          - "Teko, Vietnam - Software/DevOps Engineer"
           - "PhongVu's Customer Support Center  is a collection of many subsystems (microservices), including switchboard, time attendance system, report export, tickets, ..."
           - "The technologies used: Asterisk, Python, Rabbit-MQ, Redis, Kubernetes, Docker, ..."
-          - "Software/DevOps engineer"
       - name: Daito
         duration:
           start: 2017
         details:
-          - "FPT Software (Intern)"
+          - "FPT Software (Intern) - Software Engineer"
           - "Real estate management system in Japan"
           - "The technologies used: Java Spring, Oracle"
-          - "Software engineer"
   - section:
     name: Skills & Expertise
     achievements:
