@@ -1,6 +1,6 @@
 body {
     font-family: 'Times New Roman', sans-serif;
-    font-size: 14pt;
+    font-size: 12pt;
 }
 
 @page {
@@ -56,7 +56,7 @@ p.section_name {
 
 table.achievement {
     border-collapse: separate;
-    border-spacing: 0 0.5em;
+    border-spacing: 0 0.2em;
 }
 
 td.duration {
@@ -77,7 +77,7 @@ ul {
 }
 
 li {
-    margin: 7px 0;
+    margin: 1px 0;
 }
 
 span.detail_title {
