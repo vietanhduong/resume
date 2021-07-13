@@ -1,6 +1,7 @@
 body {
-    font-family: 'Times New Roman', sans-serif;
+    font-family: 'Fira Sans', sans;
     font-size: 12pt;
+    background-color: #e7e7e7;
 }
 
 @page {
@@ -12,12 +13,22 @@ body {
         width: 21cm;
         height: 29.7cm;
     }
+
+    .content {
+        width: 100% !important;
+        max-width: 100% !important;
+        padding: 0 0 !important;
+        border: none !important;
+    }
 }
 
 .content {
+    background-color: white;
     max-width: 45em;
-    margin: 30pt auto;
+    margin: 0 auto;
+    padding: 30pt 3em;
     text-align: justify;
+    border: .1em solid #c0c0c0;
 }
 
 .pb12 {
