@@ -95,3 +95,12 @@ span.detail_title {
     font-weight: 600;
     margin-bottom: 10px;
 }
+
+a[href] {
+    color: #005090;
+}
+
+a {
+    text-decoration: none;
+    outline-style: none;
+}
