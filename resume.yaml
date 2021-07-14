@@ -21,9 +21,12 @@ spec:
   - section:
     name: Honor and Awards
     achievements:
-      - name: 2nd Prize in the olympiad in informatics of Hanoi province
+      - name: The team with the highest score at the 11th FPT University Graduation Thesis (9 teams) 
         duration:
-          start: "Nov 2012"
+          start: "Sep 2018"
+        details: 
+          - "Project: Admisson Supporting Chatbot"
+          - "Score: 9.8"
   - section:
     name: Working Experience
     achievements:
