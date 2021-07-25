@@ -5,6 +5,7 @@ COPY . .
 RUN go build -o /out/resume
 
 FROM debian:buster
+
 COPY --from=build /out/resume /
 COPY public /public
 
