@@ -15,7 +15,36 @@ jobs:
     runs-on: ubuntu-latest
     outputs:
       have_build: ${{ steps.have_build.outputs.result }}
+      current_branch: ${{ steps.current_branch.outputs.value }}
+      commit_tag: ${{ steps.commit_tag.outputs.value }}
+      version_tag: ${{ steps.version_tag.outputs.value }}
     steps:
+      - name: Checkout
+        uses: actions/checkout@v2
+
+      - name: Extract branch
+        shell: bash
+        id: current_branch
+        run: |
+          BRANCH="${GITHUB_REF#refs/heads/}"
+          if [[ "$GITHUB_REF" =~ refs/tags ]]; then
+            raw=$(git branch -r --contains ${{ github.ref }})
+            BRANCH=${raw/origin\/}
+          fi
+          echo "::set-output name=value::$BRANCH"
+      - name: Get Git Commit Tag
+        shell: bash
+        id: commit_tag
+        run: |
+          COMMIT_HASH="$(echo $GITHUB_SHA | head -c7)"
+          echo "::set-output name=value::$COMMIT_HASH"
+          
+      - name: Get version tag
+        id: version_tag
+        run: |
+          [[ ! "$GITHUB_REF" =~ refs/tags ]] && exit
+          echo "::set-output name=value::${GITHUB_REF#refs/tags/}"
+          
       - name: Build new Image or not
         id: have_build
         run: |
@@ -52,6 +81,9 @@ jobs:
     needs:
       - prepare
       - validate
+    env:
+      BRANCH: ${{ needs.prepare.outputs.current_branch }}
+      SHORT_COMMIT: ${{ needs.prepare.outputs.commit_tag }}
     if: needs.prepare.outputs.have_build == 'true'
     runs-on: ubuntu-latest
     steps:
@@ -81,7 +113,7 @@ jobs:
         uses: docker/build-push-action@v2
         with:
           push: true
-          tags: ${{ secrets.DOCKER_USERNAME }}/resume:latest
+          tags: ${{ secrets.DOCKER_USERNAME }}/resume:${{ env.BRANCH }}-${{ env.SHORT_COMMIT }}
           cache-from: type=local,src=/tmp/.buildx-cache
           cache-to: type=local,dest=/tmp/.buildx-cache-new
 
@@ -89,18 +121,3 @@ jobs:
         run: |
           rm -rf /tmp/.buildx-cache
           mv /tmp/.buildx-cache-new /tmp/.buildx-cache
-
-  deploy:
-    needs:
-      - prepare
-      - build
-    if: needs.prepare.outputs.have_build == 'true'
-    runs-on: ubuntu-18.04
-    steps:
-      - name: Install SSH Key
-        uses: appleboy/ssh-action@master
-        with:
-          host: ${{ secrets.HOST }}
-          username: ${{ secrets.USERNAME }}
-          key: ${{ secrets.SSH_PRIVATE_KEY }}
-          script: sudo service resume restart
