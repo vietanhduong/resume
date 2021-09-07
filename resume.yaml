@@ -74,6 +74,9 @@ spec:
       - name: Linux, Macintosh, Windows
         duration:
           start: Platform
+      - name: Google Cloud Platform, Amazone Web Service, Azure (familiar)
+        duration: 
+          start: Cloud Platform
       - name: Kubernetes, GitlabCI, ArgoCD, CircleCI,...
         duration:
           start: Technology
