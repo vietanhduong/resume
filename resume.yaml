@@ -68,7 +68,7 @@ spec:
   - section:
     name: Skills & Expertise
     achievements:
-      - name: Familiar with Go, Python, C++, C#
+      - name: Familiar with Go, Python, Shell, C++, C#
         duration:
           start: Languages
       - name: Linux, Macintosh, Windows
