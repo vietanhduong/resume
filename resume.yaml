@@ -36,7 +36,7 @@ spec:
           end: Present
         details:
           - "Kyber Network, Vietnam"
-          - "DevOps Engineer"
+          - "Site Reliability Engineer"
           - "Construction and management of Kyber Network's infrastructure."
           - "The technologies using: GKE, EKS, Terraform, Vault, ..."
       - name: PhongVu's Payment Gateway
